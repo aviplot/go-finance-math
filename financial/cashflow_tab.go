@@ -1,6 +1,9 @@
 package financial
 
-import "errors"
+import (
+	"errors"
+	"sort"
+)
 
 type cashFlowTab []cashFlow
 
@@ -41,5 +44,21 @@ func (ca cashFlowTab) String() (result string) {
 	for _, c := range ca {
 		result = result + c.String() + "\n"
 	}
+	return
+}
+
+func (ca cashFlowTab) Len() int {
+	return len(ca)
+}
+func (ca cashFlowTab) Swap(i, j int) {
+	ca[i], ca[j] = ca[j], ca[i]
+}
+func (ca cashFlowTab) Less(i, j int) bool {
+	return ca[i].Date.Date.Before(ca[j].Date.Date)
+}
+
+func (ca cashFlowTab) OrderByDate() (r cashFlowTab) {
+	r = ca
+	sort.Sort(r)
 	return
 }

@@ -4,25 +4,15 @@ import (
 	"fmt"
 )
 
+// cashFlow Holds one record of a cash flow table.
 type cashFlow struct {
 	Date date
 	Flow float64
 }
 
-type cashFlowWithCalculated struct {
-	cashFlow
-	OrderId   int
-	Period    int
-	Interest  float64
-	Principal float64
-}
-
+// NewCashFlow returns new empty cashflow record
 func NewCashFlow() cashFlow {
 	return cashFlow{}
-}
-
-func NewCashFlowWithCalculated() cashFlowWithCalculated {
-	return cashFlowWithCalculated{}
 }
 
 func (c cashFlow) String() string {

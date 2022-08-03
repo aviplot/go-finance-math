@@ -28,7 +28,7 @@ func NewDateFromFormattedString(ts string) (d date) {
 	return
 }
 
-// daysBetweenDates calculate amount of day between dates, neglecting time.
+// daysBetweenDates calculate amount of days between dates, neglecting time.
 func daysBetweenDates(d1, d2 date) int64 {
 	h := d2.Date.Sub(d1.Date).Hours()
 	days := h / 24

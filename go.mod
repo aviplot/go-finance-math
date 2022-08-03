@@ -1,1 +1,3 @@
-module "go-finance-math"
+module github.com/aviplot/go-finance-math
+
+go 1.17
