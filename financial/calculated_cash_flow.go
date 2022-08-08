@@ -2,7 +2,7 @@ package financial
 
 // calculatedCashFlow is cashflow, with added calculated information
 type calculatedCashFlow struct {
-	cashFlow
+	CashFlow
 	OrderId   int
 	Period    int
 	Interest  float64

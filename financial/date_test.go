@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// TestDate validate date format YYYY-MM-DD
+// TestDate validate Date format YYYY-MM-DD
 func TestAddMonth(t *testing.T) {
 	// Read known data.
 	dt := testdata.TESTGetDateData()
@@ -18,7 +18,7 @@ func TestAddMonth(t *testing.T) {
 
 		basePMDate := baseDate.AddMonth()
 		if !basePMDate.Date.Equal(monthTestDate.Date) {
-			log.Fatalf("Base date: %v +month is: %v but expected is: %v", baseDate, basePMDate, monthTestDate)
+			log.Fatalf("Base Date: %v +month is: %v but expected is: %v", baseDate, basePMDate, monthTestDate)
 		}
 
 		if baseDate.DaysTo(targetDate) != d.DaysToTarget {

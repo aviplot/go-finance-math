@@ -13,7 +13,7 @@
 //limitations under the License.
 //**************************************************
 
-// Most of the code is a translation to Golang from:
+// Most of the code is a translation to Golang from open office:
 // https://github.com/apache/openoffice/blob/trunk/main/scaddins/source/analysis/financial.cxx
 
 package financial
@@ -68,7 +68,7 @@ func getCumprinc(fRate float64, nNumPeriods int64, fVal float64, nStartPer int64
 // XIRR helper functions
 
 /** Calculates the resulting amount for the passed interest rate and the given XIRR parameters. */
-func xirrResult(cf cashFlowTab, fRate float64) float64 {
+func xirrResult(cf CashFlowTab, fRate float64) float64 {
 
 	/*  V_0 ... V_n = input values.
 	    D_0 ... D_n = input dates.
@@ -98,7 +98,7 @@ func xirrResult(cf cashFlowTab, fRate float64) float64 {
 }
 
 /** Calculates the first derivation of lcl_sca_XirrResult(). */
-func xirrResult_Deriv1(cf cashFlowTab, fRate float64) float64 {
+func xirrResult_Deriv1(cf CashFlowTab, fRate float64) float64 {
 
 	/*  V_0 ... V_n = input values.
 	    D_0 ... D_n = input dates.
@@ -130,7 +130,7 @@ func xirrResult_Deriv1(cf cashFlowTab, fRate float64) float64 {
 }
 
 // Xirr calculation
-func Xirr(cf cashFlowTab) (fResultRate float64, e error) {
+func Xirr(cf CashFlowTab) (fResultRate float64, e error) {
 	if len(cf) <= 2 {
 		e = ErrParametersError
 		return
@@ -192,7 +192,7 @@ func Xirr(cf cashFlowTab) (fResultRate float64, e error) {
 	return
 }
 
-func Xnpv(fRate float64, cf cashFlowTab) (fRet float64, e error) {
+func Xnpv(fRate float64, cf CashFlowTab) (fRet float64, e error) {
 	nNum := len(cf)
 
 	if nNum < 2 {
@@ -240,7 +240,7 @@ func Fv(rate float64, nper int64, pmt float64, pv float64, t bool) float64 {
 	return -pv*c - pmt*(1+rate*tVal)*(c-1)/rate
 }
 
-func Xfv(rate float64, cf cashFlowTab) (fRet float64, e error) {
+func Xfv(rate float64, cf CashFlowTab) (fRet float64, e error) {
 	nNum := len(cf)
 
 	if nNum < 2 {

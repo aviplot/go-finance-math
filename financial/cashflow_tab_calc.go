@@ -6,7 +6,7 @@ type calculatedData struct {
 }
 
 type cashflowTabCalc struct {
-	cfTab cashFlowTab
+	cfTab CashFlowTab
 	calc  calculatedData
 }
 

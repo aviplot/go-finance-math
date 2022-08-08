@@ -4,17 +4,17 @@ import (
 	"fmt"
 )
 
-// cashFlow Holds one record of a cash flow table.
-type cashFlow struct {
-	Date date
-	Flow float64
+// CashFlow Holds one record of a cash flow table.
+type CashFlow struct {
+	Date Date    `json:"date"`
+	Flow float64 `json:"flow"`
 }
 
 // NewCashFlow returns new empty cashflow record
-func NewCashFlow() cashFlow {
-	return cashFlow{}
+func NewCashFlow() CashFlow {
+	return CashFlow{}
 }
 
-func (c cashFlow) String() string {
+func (c CashFlow) String() string {
 	return fmt.Sprintf("Date: %v | flow: %v", c.Date, c.Flow)
 }

@@ -5,19 +5,20 @@ import (
 	"sort"
 )
 
-type cashFlowTab []cashFlow
+type CashFlowTab []CashFlow
 
 var ErrEmptySlice = errors.New("slice is empty")
 
-func NewCashFlowTab(first float64, fDate string, months int, in float64, inDate string) (result cashFlowTab) {
-	f := cashFlow{
+// NewCashFlowTab created new CashFlowTab, used in testcases.
+func NewCashFlowTab(first float64, fDate string, months int, in float64, inDate string) (result CashFlowTab) {
+	f := CashFlow{
 		NewDateFromFormattedString(fDate), first,
 	}
 	result = append(result, f)
 
 	currentMonth := NewDateFromFormattedString(inDate)
 	for months > 0 {
-		result = append(result, cashFlow{
+		result = append(result, CashFlow{
 			currentMonth, in,
 		})
 		currentMonth = currentMonth.AddMonth()
@@ -26,38 +27,43 @@ func NewCashFlowTab(first float64, fDate string, months int, in float64, inDate 
 	return
 }
 
-func (ca cashFlowTab) FirstFlow() float64 {
+func (ca CashFlowTab) FirstFlow() float64 {
 	if len(ca) > 0 {
 		return ca[0].Flow
 	}
 	panic(ErrEmptySlice)
 }
 
-func (ca cashFlowTab) FirstDate() date {
+func (ca CashFlowTab) FirstDate() Date {
 	if len(ca) > 0 {
 		return ca[0].Date
 	}
 	panic(ErrEmptySlice)
 }
 
-func (ca cashFlowTab) String() (result string) {
+func (ca CashFlowTab) String() (result string) {
 	for _, c := range ca {
 		result = result + c.String() + "\n"
 	}
 	return
 }
 
-func (ca cashFlowTab) Len() int {
+// Len impl "Interface" to support sorting, using sort.Sort.
+func (ca CashFlowTab) Len() int {
 	return len(ca)
 }
-func (ca cashFlowTab) Swap(i, j int) {
+
+// Swap impl "Interface" to support sorting, using sort.Sort.
+func (ca CashFlowTab) Swap(i, j int) {
 	ca[i], ca[j] = ca[j], ca[i]
 }
-func (ca cashFlowTab) Less(i, j int) bool {
+
+// Less impl "Interface" to support sorting, using sort.Sort.
+func (ca CashFlowTab) Less(i, j int) bool {
 	return ca[i].Date.Date.Before(ca[j].Date.Date)
 }
 
-func (ca cashFlowTab) OrderByDate() (r cashFlowTab) {
+func (ca CashFlowTab) OrderByDate() (r CashFlowTab) {
 	r = ca
 	sort.Sort(r)
 	return
