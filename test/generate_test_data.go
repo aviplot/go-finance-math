@@ -45,7 +45,8 @@ func randomizeDate() string {
 	m := int(randomizeInt64(1, 10))
 	d := 10
 	t := time.Date(y, time.Month(m), d, 0, 0, 0, 0, time.Local)
-	return fmt.Sprintf("%v-%v-%v", t.Day(), t.Month(), t.Year())
+	return t.Format("2006-01-02")
+	//return fmt.Sprintf("%04d-%02d-%02d", t.Year(), int(t.Month()), t.Day())
 }
 
 func calc(cf financial.CashFlowTab) (c Calculations) {
@@ -72,7 +73,7 @@ func getRandomFileRecord(id int) fileRecord {
 }
 
 func recordsToFile(fn string, d []fileRecord) {
-	e, err := json.MarshalIndent(d,"","	")
+	e, err := json.MarshalIndent(d, "", "	")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -89,7 +90,7 @@ func recordsToFile(fn string, d []fileRecord) {
 }
 
 func main() {
-	amount := 100
+	amount := 10
 	f := make([]fileRecord, amount)
 	rand.Seed(time.Now().UnixNano())
 	getNextId := getNextIdFunc()

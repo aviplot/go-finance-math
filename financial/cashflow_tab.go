@@ -27,6 +27,14 @@ func NewCashFlowTab(first float64, fDate string, months int, in float64, inDate 
 	return
 }
 
+// NewCashFlowPayments created new CashFlowTab, used in testcases.
+func NewCashFlowPayments(a float64, fDate string, months int64, rate float64) (result CashFlowTab) {
+	pmt := Pmt(rate, months, -a, 0, false)
+	d := NewDateFromFormattedString(fDate).AddMonth()
+	NewCashFlowTab(-a, fDate, int(months), pmt, d.String())
+	return
+}
+
 func (ca CashFlowTab) FirstFlow() float64 {
 	if len(ca) > 0 {
 		return ca[0].Flow

@@ -10,15 +10,15 @@ type dateData struct {
 func TESTGetDateData() []dateData {
 	return []dateData{
 		{
-			Date:          "19-05-1982",
-			DatePlusMonth: "19-06-1982",
-			TargetDate:    "20-02-2020",
+			Date:          "1982-05-19",
+			DatePlusMonth: "1982-06-19",
+			TargetDate:    "2020-02-20",
 			DaysToTarget:  13791,
 		},
 		{
-			Date:          "31-08-2022",
-			DatePlusMonth: "01-10-2022", // Note that we passed two months
-			TargetDate:    "01-09-2022",
+			Date:          "2022-08-31",
+			DatePlusMonth: "2022-10-01", // Note that we passed two months
+			TargetDate:    "2022-09-01",
 			DaysToTarget:  1,
 		},
 	}

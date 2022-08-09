@@ -1,13 +1,14 @@
 package financial
 
 import (
-	"strconv"
-	"strings"
+	"encoding/json"
 	"time"
 )
 
-// Date represent Date, neglecting time.
+// layout is how date is represented as string.
+const layout = "2006-01-02"
 
+// Date represent Date, neglecting time.
 type Date struct {
 	Date time.Time // Using standard time
 }
@@ -18,14 +19,23 @@ func NewDateFromTime(t time.Time) (d Date) {
 	return
 }
 
-// NewDateFromFormattedString converts "dd-mm-yyyy" to Date
+// NewDateFromFormattedString converts "yyyy-mm-dd" to Date
 func NewDateFromFormattedString(ts string) (d Date) {
-	s := strings.Split(ts, "-")
-	dd, _ := strconv.Atoi(s[0])
-	mm, _ := strconv.Atoi(s[1])
-	yyyy, _ := strconv.Atoi(s[2])
-	d.Date = time.Date(yyyy, time.Month(mm), dd, 0, 0, 0, 0, time.UTC)
+	t, err := time.Parse(layout, ts)
+	if err != nil {
+		// Error converting the date
+		panic(err)
+	}
+	d.Date = t
 	return
+
+	//s := strings.Split(ts, "-")
+	//yyyy, _ := strconv.Atoi(s[0])
+	//mm, _ := strconv.Atoi(s[1])
+	//dd, _ := strconv.Atoi(s[2])
+	//
+	//d.Date = time.Date(yyyy, time.Month(mm), dd, 0, 0, 0, 0, time.UTC)
+	//return
 }
 
 // daysBetweenDates calculate amount of days between dates, neglecting time.
@@ -45,4 +55,13 @@ func (d Date) DaysTo(d1 Date) int64 {
 func (d Date) AddMonth() (dr Date) {
 	dr.Date = d.Date.AddDate(0, 1, 0)
 	return
+}
+
+func (d Date) String() string {
+	//return fmt.Sprintf("%04d-%02d-%02d", d.Date.Year(), int(d.Date.Month()), d.Date.Day())
+	return d.Date.Format(layout)
+}
+
+func (d Date) MarshalJSON() ([]byte, error) {
+	return json.Marshal(d.String())
 }
