@@ -79,7 +79,7 @@ func recordsToFile(fn string, d []fileRecord) {
 	}
 	s := string(e)
 
-	f, err := os.Create("flows.js")
+	f, err := os.Create("flows-js.data")
 	if err != nil {
 		panic("File writing error")
 	}
