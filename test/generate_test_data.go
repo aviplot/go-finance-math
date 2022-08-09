@@ -12,6 +12,7 @@ import (
 
 type Calculations struct {
 	Xirr float64 `json:"xirr"`
+	Xnpv float64 `json:"xnpv"`
 }
 
 type fileRecord struct {
@@ -48,12 +49,20 @@ func randomizeDate() string {
 }
 
 func calc(cf financial.CashFlowTab) (c Calculations) {
-	c.Xirr, _ = financial.Xirr(cf)
+	var e error
+	c.Xirr, e = financial.Xirr(cf)
+	if e != nil {
+		c.Xirr = 0
+	}
+	c.Xnpv, e = financial.Xnpv(0.15, cf)
+	if e != nil {
+		c.Xnpv = 0
+	}
 	return
 }
 
 func getRandomFileRecord(id int) fileRecord {
-	flows := financial.NewCashFlowTab(-randomizeFloat64(30000, 100000), randomizeDate(), int(randomizeInt64(10, 100)),
+	flows := financial.NewCashFlowTab(-randomizeFloat64(30000, 100000), randomizeDate(), int(randomizeInt64(10, 200)),
 		float64(randomizeInt64(1000, 3000)), randomizeDate())
 	f := new(fileRecord)
 	f.Id = fmt.Sprintf("%v", id)
@@ -80,7 +89,7 @@ func recordsToFile(fn string, d []fileRecord) {
 }
 
 func main() {
-	amount := 3
+	amount := 100
 	f := make([]fileRecord, amount)
 	rand.Seed(time.Now().UnixNano())
 	getNextId := getNextIdFunc()
