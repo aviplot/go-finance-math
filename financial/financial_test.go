@@ -55,7 +55,7 @@ func TestXirr(t *testing.T) {
 		*/
 		cf := NewCashFlowTab(td.Amount, td.DateStart, td.IncomeTimes, td.Income, td.DateIncomeStart)
 		//fmt.Println(cf)
-		expected := td.ExpectedIRR
+		expected := td.ExpectedXIRR
 		precision := getPrecisionFromFloat(expected)
 		result, _ := Xirr(cf)
 		result = round(result, precision)

@@ -208,7 +208,6 @@ func Irr(cf CashFlowTab) (guessRate float64, e error) {
 		lowGuessRate  = LowRate
 		highGuessRate = HighRate
 		npv           float64
-		denom         float64
 	)
 	numOfFlows := len(cf)
 	guessRate = LowRate
@@ -219,10 +218,9 @@ func Irr(cf CashFlowTab) (guessRate float64, e error) {
 	for i := 0; i < MaxIteration; i++ {
 		npv = 0.00
 		for j, c := range cf {
-			denom = math.Pow(1+guessRate, float64(j))
-			npv = npv + (c.Flow / denom)
+			npv += c.Flow / math.Pow(guessRate+1, float64(j))
 		}
-		/* Stop checking once the required precision is achieved */
+		// Stop checking once the required precision is achieved
 		if (npv > 0) && (npv < PrecisionReq) {
 			break
 		}
