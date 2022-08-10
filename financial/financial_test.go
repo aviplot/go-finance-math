@@ -170,7 +170,7 @@ func TestIrr(t *testing.T) {
 		precision := getPrecisionFromFloat(expected)
 		result, _ := Irr(cf)
 		result = round(result, precision)
-		expected =  round(expected, precision)
+		expected = round(expected, precision)
 		if result != expected {
 			t.Fatalf("Error, result: \"%v\" Expected: \"%v\" (Precision: %v)", result, expected, precision)
 		}

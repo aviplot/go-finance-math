@@ -9,7 +9,7 @@ type CashFlowTestData struct {
 	IncomeTimes     int
 	Balloon         float64
 	BalloonDate     string // "dd-mm-yyyy"
-	ExpectedXIRR     float64
+	ExpectedXIRR    float64
 	ExpectedIRR     float64
 	ExpectedNPV     float64
 	Pv              float64
@@ -27,7 +27,7 @@ func TESTGetCashflowTestData() []CashFlowTestData {
 			IncomeTimes:     36,
 			Balloon:         0,
 			BalloonDate:     "2000-06-20",
-			ExpectedXIRR:     0.2826335,
+			ExpectedXIRR:    0.2826335,
 			ExpectedIRR:     0.02121114161818,
 			ExpectedNPV:     35543.5544,
 			Pv:              -130993.51,
@@ -42,7 +42,7 @@ func TESTGetCashflowTestData() []CashFlowTestData {
 			IncomeTimes:     36,
 			Balloon:         0,
 			BalloonDate:     "2000-06-20",
-			ExpectedXIRR:     0.769936717,
+			ExpectedXIRR:    0.769936717,
 			ExpectedIRR:     0.049439495,
 			ExpectedNPV:     106347.1928,
 			Pv:              111,
@@ -57,7 +57,7 @@ func TESTGetCashflowTestData() []CashFlowTestData {
 			IncomeTimes:     18,
 			Balloon:         0,
 			BalloonDate:     "2000-06-20",
-			ExpectedXIRR:     0.15719098,
+			ExpectedXIRR:    0.15719098,
 			ExpectedIRR:     0.0125,
 			ExpectedNPV:     97.61421509,
 			Pv:              0,

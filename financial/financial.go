@@ -193,36 +193,34 @@ func Xirr(cf CashFlowTab) (fResultRate float64, e error) {
 }
 
 // Irr calculation IRR, neglecting dates.
-func Irr(cf CashFlowTab) (fResultRate float64, e error) {
+func Irr(cf CashFlowTab) (guessRate float64, e error) {
 	const (
 		LowRate      float64 = 0.01
 		HighRate     float64 = 0.5
 		MaxIteration int     = 150
-		PrecisionReq float64 = 1e-15
+		PrecisionReq float64 = 1e-10
 	)
 
 	var (
-		i             int
-		j             int
 		old           float64
 		newVal        float64
-		newGuessRate   = LowRate
-		guessRate      = LowRate
-		lowGuessRate   = LowRate
-		highGuessRate  = HighRate
+		newGuessRate  = LowRate
+		lowGuessRate  = LowRate
+		highGuessRate = HighRate
 		npv           float64
 		denom         float64
 	)
 	numOfFlows := len(cf)
+	guessRate = LowRate
 	if numOfFlows < 2 {
 		return 0, ErrParametersError
 	}
 
-	for i = 0; i < MaxIteration; i++ {
+	for i := 0; i < MaxIteration; i++ {
 		npv = 0.00
-		for j = 0; j < numOfFlows; j++ {
+		for j, c := range cf {
 			denom = math.Pow(1+guessRate, float64(j))
-			npv = npv + (cf[j].Flow / denom)
+			npv = npv + (c.Flow / denom)
 		}
 		/* Stop checking once the required precision is achieved */
 		if (npv > 0) && (npv < PrecisionReq) {
@@ -252,7 +250,10 @@ func Irr(cf CashFlowTab) (fResultRate float64, e error) {
 		guessRate = (lowGuessRate + highGuessRate) / 2
 		newGuessRate = guessRate
 	}
-	return guessRate, nil
+	if math.Abs(guessRate-npv) > PrecisionReq {
+		e = ErrCalculationError // Even there is a calculation error, return the best guess.
+	}
+	return
 }
 
 func Xnpv(fRate float64, cf CashFlowTab) (fRet float64, e error) {
