@@ -135,3 +135,44 @@ func TestEffective(t *testing.T) {
 		t.Fatalf("Error, result: \"%v\" Expected: \"%v\" (Precision: %v)", result, expected, precision)
 	}
 }
+
+// TestNominal validate GetNominal function
+func TestCashFlow(t *testing.T) {
+	r := 0.12345
+	cf := NewCashFlowPayments(1000000, "2010-05-10", 240, r/12)
+	result, e := Xirr(cf)
+	if e != nil {
+		t.Fatalf("Error: %v", e)
+		return
+	}
+	expected := 0.13053038213
+	precision := getPrecisionFromFloat(expected)
+	result = round(result, precision)
+	expected = round(expected, precision)
+	if result != expected {
+		t.Fatalf("Error, result: \"%v\" Expected: \"%v\" (Precision: %v)", result, expected, precision)
+	}
+}
+
+// TestIrr validate IRR function
+func TestIrr(t *testing.T) {
+	// Read known data.
+	tdTab := testdata.TESTGetCashflowTestData()
+
+	for _, td := range tdTab {
+		// Create cashflow using test data.
+		/*
+			first float64, fDate string, months int, in float64, inDate string
+		*/
+		cf := NewCashFlowTab(td.Amount, td.DateStart, td.IncomeTimes, td.Income, td.DateIncomeStart)
+		//fmt.Println(cf)
+		expected := td.ExpectedIRR
+		precision := getPrecisionFromFloat(expected)
+		result, _ := Irr(cf)
+		result = round(result, precision)
+		expected =  round(expected, precision)
+		if result != expected {
+			t.Fatalf("Error, result: \"%v\" Expected: \"%v\" (Precision: %v)", result, expected, precision)
+		}
+	}
+}

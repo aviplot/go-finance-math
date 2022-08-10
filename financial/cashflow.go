@@ -16,5 +16,5 @@ func NewCashFlow() CashFlow {
 }
 
 func (c CashFlow) String() string {
-	return fmt.Sprintf("Date: %v | flow: %v", c.Date, c.Flow)
+	return fmt.Sprintf("Date: %v | Flow: %v", c.Date, c.Flow)
 }

@@ -31,7 +31,7 @@ func NewCashFlowTab(first float64, fDate string, months int, in float64, inDate 
 func NewCashFlowPayments(a float64, fDate string, months int64, rate float64) (result CashFlowTab) {
 	pmt := Pmt(rate, months, -a, 0, false)
 	d := NewDateFromFormattedString(fDate).AddMonth()
-	NewCashFlowTab(-a, fDate, int(months), pmt, d.String())
+	result = NewCashFlowTab(-a, fDate, int(months), pmt, d.String())
 	return
 }
 
